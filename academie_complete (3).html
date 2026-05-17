@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Académie Santé & Travail</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1612;--cream:#f5f0e8;--sage:#4a6741;--sage-l:#c8d9c5;
+  --clay:#c4714a;--clay-l:#f2ddd3;--dust:#e8e2d8;--muted:#7a7268;
+  --border:rgba(26,22,18,.12);--purple:#534AB7;--purple-l:#EEEDFE;
+}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:'DM Sans',sans-serif;line-height:1.6;overflow-x:hidden}
+
+/* ─── PAGE TRANSITIONS ─── */
+.page{display:none;animation:pageIn .45s ease both}
+.page.active{display:block}
+@keyframes pageIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── NAV ─── */
+nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 2.5rem;background:var(--cream);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--ink);text-decoration:none;cursor:pointer}
+.nav-right{display:flex;align-items:center;gap:1.5rem}
+.nav-link{font-size:.875rem;color:var(--muted);text-decoration:none;cursor:pointer;background:none;border:none}
+.nav-link:hover{color:var(--ink)}
+.nav-cta{background:var(--ink);color:var(--cream);padding:.55rem 1.25rem;border-radius:2rem;font-size:.875rem;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.nav-cta:hover{background:var(--sage)}
+
+/* ─── LANDING ─── */
+.hero{min-height:calc(100vh - 60px);display:grid;grid-template-columns:1fr 1fr;gap:4rem;padding:5rem 2.5rem 3rem;align-items:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:500px;height:500px;border-radius:50%;background:var(--sage-l);opacity:.3;animation:float 8s ease-in-out infinite}
+.hero::after{content:'';position:absolute;bottom:40px;left:8%;width:240px;height:240px;border-radius:50%;background:var(--clay-l);opacity:.35;animation:float 10s ease-in-out infinite reverse}
+.hero-left{position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);background:var(--sage-l);padding:.4rem 1rem;border-radius:2rem;margin-bottom:1.5rem}
+.eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--sage)}
+h1.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,4.5vw,3.6rem);font-weight:700;line-height:1.15;margin-bottom:1.25rem}
+h1.hero-h1 em{font-style:italic;color:var(--clay)}
+.hero-desc{font-size:1rem;color:var(--muted);max-width:440px;line-height:1.75;margin-bottom:2rem}
+.hero-actions{display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap}
+.btn-primary{background:var(--ink);color:var(--cream);padding:.85rem 1.9rem;border-radius:2rem;font-size:.95rem;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s,transform .15s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-primary:hover{background:var(--sage);transform:translateY(-2px)}
+.btn-ghost{color:var(--ink);font-size:.9rem;border:none;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;border-bottom:1px solid var(--border);padding-bottom:2px;transition:color .2s}
+.btn-ghost:hover{color:var(--sage)}
+.hero-stats{display:flex;gap:2rem;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border)}
+.stat-n{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;line-height:1}
+.stat-l{font-size:.78rem;color:var(--muted);margin-top:.2rem}
+.hero-right{position:relative;z-index:1;display:flex;justify-content:center;align-items:center}
+.card-stack{position:relative;width:320px;height:400px}
+.s-card{position:absolute;border-radius:1.25rem;padding:1.4rem 1.6rem;width:290px;transition:transform .3s}
+.s-card:nth-child(1){top:0;left:30px;background:var(--ink);z-index:3}
+.s-card:nth-child(2){top:55px;left:15px;background:var(--dust);z-index:2;transform:rotate(2deg);border:1px solid var(--border)}
+.s-card:nth-child(3){top:100px;left:0;background:var(--sage-l);z-index:1;transform:rotate(-2.5deg);border:1px solid rgba(74,103,65,.2)}
+.s-card-icon{font-size:1.6rem;margin-bottom:.6rem}
+.s-card-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.4rem}
+.s-card:nth-child(1) .s-card-title{color:var(--cream)}
+.s-card:nth-child(2) .s-card-title{color:var(--ink)}
+.s-card:nth-child(3) .s-card-title{color:var(--sage)}
+.s-card-body{font-size:.78rem;line-height:1.6}
+.s-card:nth-child(1) .s-card-body{color:rgba(245,240,232,.65)}
+.s-card:nth-child(2) .s-card-body{color:var(--muted)}
+.s-card:nth-child(3) .s-card-body{color:#3a5337}
+.s-tag{display:inline-block;font-size:.7rem;font-weight:500;padding:.25rem .7rem;border-radius:2rem;margin-top:.7rem}
+.s-card:nth-child(1) .s-tag{background:rgba(245,240,232,.15);color:rgba(245,240,232,.8)}
+.s-card:nth-child(2) .s-tag{background:var(--cream);color:var(--muted)}
+.s-card:nth-child(3) .s-tag{background:var(--sage);color:var(--cream)}
+
+/* marquee */
+.marquee-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.9rem 0;overflow:hidden;background:var(--dust)}
+.marquee-track{display:flex;gap:2.5rem;width:max-content;animation:marquee 22s linear infinite}
+.m-item{display:flex;align-items:center;gap:.6rem;font-size:.75rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.m-dot{width:5px;height:5px;border-radius:50%;background:var(--clay)}
+
+/* modules grid on landing */
+.landing-modules{padding:4.5rem 2.5rem}
+.s-label{font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--clay);margin-bottom:.75rem}
+h2.section-h2{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3vw,2.4rem);font-weight:700;line-height:1.2;color:var(--ink);margin-bottom:2rem}
+.mods-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem}
+.m-card{border:1px solid var(--border);border-radius:1.25rem;padding:1.5rem 1.25rem;background:var(--cream);cursor:pointer;transition:transform .25s,border-color .25s;position:relative;overflow:hidden}
+.m-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:1.25rem 1.25rem 0 0;transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.m-card:nth-child(1)::before,.m-card:nth-child(3)::before{background:var(--sage)}
+.m-card:nth-child(2)::before,.m-card:nth-child(4)::before{background:var(--clay)}
+.m-card:hover{transform:translateY(-4px);border-color:rgba(26,22,18,.25)}
+.m-card:hover::before{transform:scaleX(1)}
+.m-num{font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem}
+.m-emoji{font-size:1.75rem;display:block;margin-bottom:.75rem}
+.m-title{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:.4rem;line-height:1.3}
+.m-desc{font-size:.78rem;color:var(--muted);line-height:1.6}
+.m-xp{display:inline-flex;align-items:center;gap:.3rem;margin-top:1rem;font-size:.72rem;font-weight:500;color:var(--sage);background:var(--sage-l);padding:.28rem .7rem;border-radius:2rem}
+
+/* ─── AUDIO PLAYER ─── */
+.audio-section{padding:4rem 2.5rem;background:var(--ink)}
+.audio-section-inner{max-width:860px;margin:0 auto}
+.audio-header{margin-bottom:2rem}
+.audio-header .a-label{font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--clay-l);margin-bottom:.75rem}
+.audio-header h2{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,2.5vw,2rem);color:var(--cream);line-height:1.25;margin-bottom:.6rem}
+.audio-header p{font-size:.875rem;color:rgba(245,240,232,.5);line-height:1.7;max-width:560px}
+.player-wrap{background:rgba(245,240,232,.05);border:1px solid rgba(245,240,232,.1);border-radius:1.25rem;overflow:hidden}
+.player-now{padding:1.5rem 1.75rem;border-bottom:1px solid rgba(245,240,232,.08)}
+.player-now-top{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem}
+.play-big{width:52px;height:52px;border-radius:50%;background:var(--clay);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s,transform .1s}
+.play-big:hover{background:#d4825a;transform:scale(1.05)}
+.play-big svg{width:20px;height:20px;fill:var(--cream)}
+.now-info{flex:1;min-width:0}
+.now-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--cream);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.now-sub{font-size:.75rem;color:rgba(245,240,232,.4);margin-top:3px}
+.now-dl{display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:rgba(245,240,232,.3);text-decoration:none;flex-shrink:0;transition:color .2s}
+.now-dl:hover{color:rgba(245,240,232,.7)}
+.progress-row{display:flex;align-items:center;gap:.75rem}
+.p-time{font-size:.7rem;color:rgba(245,240,232,.35);min-width:32px;font-variant-numeric:tabular-nums}
+.p-track{flex:1;height:3px;background:rgba(245,240,232,.1);border-radius:2px;cursor:pointer;position:relative}
+.p-fill{height:100%;background:var(--clay);border-radius:2px;width:0%;pointer-events:none;transition:width .1s linear}
+.vol-row{display:flex;align-items:center;gap:.6rem;margin-top:.9rem}
+.vol-ico{font-size:.78rem;color:rgba(245,240,232,.25)}
+input.vol-sl{flex:1;-webkit-appearance:none;appearance:none;height:3px;background:rgba(245,240,232,.12);border-radius:2px;outline:none;cursor:pointer}
+input.vol-sl::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;border-radius:50%;background:rgba(245,240,232,.5);cursor:pointer}
+.playlist{padding:.5rem 0}
+.pl-item{display:flex;align-items:center;gap:.9rem;padding:.85rem 1.75rem;cursor:pointer;transition:background .15s;border-left:3px solid transparent}
+.pl-item:hover{background:rgba(245,240,232,.04)}
+.pl-item.active{background:rgba(245,240,232,.06);border-left-color:var(--clay)}
+.pl-num{font-size:.72rem;color:rgba(245,240,232,.25);min-width:18px;text-align:center;font-variant-numeric:tabular-nums}
+.pl-item.active .pl-num{color:var(--clay)}
+.pl-icon{width:32px;height:32px;border-radius:50%;background:rgba(245,240,232,.07);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s}
+.pl-item.active .pl-icon{background:rgba(196,113,74,.25)}
+.pl-icon svg{width:13px;height:13px;fill:rgba(245,240,232,.4)}
+.pl-item.active .pl-icon svg{fill:var(--clay)}
+.pl-info{flex:1;min-width:0}
+.pl-title{font-size:.875rem;color:rgba(245,240,232,.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4}
+.pl-item.active .pl-title{color:var(--cream);font-weight:500}
+.pl-dur{font-size:.7rem;color:rgba(245,240,232,.25);flex-shrink:0;font-variant-numeric:tabular-nums}
+@media(max-width:860px){.audio-section{padding:2.5rem 1.5rem}.player-now{padding:1.25rem}.pl-item{padding:.75rem 1.25rem}}
+
+/* how section */
+.how-section{padding:4rem 2.5rem;background:var(--ink);color:var(--cream)}
+.how-s-label{font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--clay-l);margin-bottom:.75rem}
+h2.how-h2{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3vw,2.4rem);color:var(--cream);margin-bottom:2.5rem}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.how-step{padding:1.75rem;border:1px solid rgba(245,240,232,.1);border-radius:1.25rem;background:rgba(245,240,232,.04)}
+.how-n{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:rgba(245,240,232,.12);line-height:1;margin-bottom:.75rem}
+.how-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--cream);margin-bottom:.5rem}
+.how-desc{font-size:.82rem;color:rgba(245,240,232,.55);line-height:1.7}
+
+/* landing CTA */
+.landing-cta{padding:5rem 2.5rem;text-align:center;position:relative;overflow:hidden}
+.landing-cta::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;border-radius:50%;background:var(--sage-l);opacity:.2;pointer-events:none}
+.cta-h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);max-width:520px;margin:0 auto 1rem;position:relative;z-index:1}
+.cta-desc{color:var(--muted);max-width:400px;margin:0 auto 2rem;font-size:.95rem;line-height:1.7;position:relative;z-index:1}
+
+footer{border-top:1px solid var(--border);padding:1.75rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.f-logo{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--ink);text-decoration:none}
+.f-copy{font-size:.78rem;color:var(--muted)}
+
+/* ─── ACADEMY APP ─── */
+.app-wrap{max-width:800px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.back-home{display:inline-flex;align-items:center;gap:.5rem;font-size:.85rem;color:var(--muted);cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;margin-bottom:1.5rem;padding:0}
+.back-home:hover{color:var(--ink)}
+
+/* dashboard */
+.db-hero{display:flex;align-items:center;gap:1rem;margin-bottom:1.75rem}
+.db-icon{width:50px;height:50px;border-radius:.9rem;background:var(--purple-l);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.db-hero h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--ink)}
+.db-hero p{font-size:.85rem;color:var(--muted);margin-top:2px}
+
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1.5rem}
+.stat-box{background:var(--dust);border-radius:.75rem;padding:1rem 1.1rem}
+.stat-box-label{font-size:.75rem;color:var(--muted);margin-bottom:.35rem}
+.stat-box-val{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:700;color:var(--ink);line-height:1}
+.stat-box-sub{font-size:.72rem;color:var(--muted);margin-top:.2rem}
+
+.xp-wrap{margin-bottom:1.75rem}
+.xp-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
+.xp-top span{font-size:.82rem;color:var(--muted)}
+.xp-top strong{font-size:.82rem;color:var(--ink)}
+.xp-track{height:7px;background:var(--dust);border-radius:4px;overflow:hidden;border:1px solid var(--border)}
+.xp-fill{height:100%;background:var(--purple);border-radius:4px;transition:width .7s cubic-bezier(.4,0,.2,1)}
+.badges-row{display:flex;gap:.6rem;margin-top:.9rem;flex-wrap:wrap}
+.badge-p{display:flex;align-items:center;gap:.4rem;padding:.4rem .8rem;border-radius:2rem;font-size:.75rem;border:1px solid var(--border);color:var(--muted);background:var(--dust);transition:all .3s}
+.badge-p.earned{background:var(--purple-l);border-color:#AFA9EC;color:#3C3489;font-weight:500}
+.badge-p.gold.earned{background:var(--clay-l);border-color:var(--clay);color:#712B13}
+
+.db-modules-label{font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem}
+.db-mods{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem}
+.db-mod{background:var(--cream);border:1px solid var(--border);border-radius:1rem;padding:1.1rem 1.25rem;cursor:pointer;transition:border-color .2s,background .2s;position:relative}
+.db-mod:hover{border-color:rgba(26,22,18,.25);background:var(--dust)}
+.db-mod.done-mod{border-color:#AFA9EC}
+.done-chip{position:absolute;top:10px;right:10px;font-size:.68rem;padding:.25rem .65rem;border-radius:2rem;background:var(--purple-l);color:var(--purple);border:1px solid #AFA9EC}
+.db-mod-head{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem}
+.db-mod-emoji{width:40px;height:40px;border-radius:.65rem;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.db-mod-name{font-size:.9rem;font-weight:500;color:var(--ink);line-height:1.3}
+.db-mod-author{font-size:.75rem;color:var(--muted);margin-top:2px}
+.db-mod-foot{display:flex;align-items:center;justify-content:space-between;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border)}
+.db-mod-xp{font-size:.75rem;color:var(--muted)}
+.db-mod-xp strong{color:var(--ink)}
+.db-mod-cta{font-size:.75rem;color:var(--purple);display:flex;align-items:center;gap:.25rem}
+
+/* lesson */
+.lesson-hero-box{background:var(--purple-l);border-radius:1rem;padding:1.25rem 1.4rem;margin-bottom:1.25rem;border:1px solid #AFA9EC}
+.lesson-hero-top{display:flex;align-items:center;gap:.9rem;margin-bottom:.8rem}
+.lesson-emoji-lg{font-size:2rem}
+.lesson-box-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#26215C}
+.lesson-box-sub{font-size:.8rem;color:#534AB7;margin-top:2px}
+.lesson-intro-text{font-size:.875rem;color:#3C3489;line-height:1.75}
+.concepts-label{font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem}
+.concept-grid{display:grid;gap:.65rem;margin-bottom:1.25rem}
+.concept-card{background:var(--cream);border:1px solid var(--border);border-radius:.75rem;padding:.9rem 1rem}
+.concept-chip{font-size:.68rem;font-weight:500;color:var(--purple);background:var(--purple-l);padding:.2rem .65rem;border-radius:2rem;display:inline-block;margin-bottom:.45rem}
+.concept-body{font-size:.82rem;color:var(--muted);line-height:1.7}
+.start-btn{width:100%;padding:.95rem;border-radius:.75rem;background:var(--purple);color:var(--purple-l);border:none;font-size:.9rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:.5rem;transition:background .2s}
+.start-btn:hover{background:#3C3489}
+
+/* quiz */
+.quiz-head{background:var(--dust);border-radius:1rem;padding:1rem 1.25rem;margin-bottom:1.25rem;border:1px solid var(--border)}
+.quiz-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem}
+.quiz-title-text{font-size:.9rem;font-weight:500;color:var(--ink)}
+.quiz-count{font-size:.82rem;color:var(--muted)}
+.q-bar-bg{height:4px;background:var(--cream);border-radius:2px;overflow:hidden;border:1px solid var(--border)}
+.q-bar-fill{height:100%;background:var(--purple);border-radius:2px;transition:width .4s ease}
+.q-card{background:var(--cream);border:1px solid var(--border);border-radius:1rem;padding:1.25rem;margin-bottom:.9rem}
+.q-num-label{font-size:.75rem;color:var(--muted);margin-bottom:.5rem}
+.q-text{font-size:.975rem;font-weight:500;color:var(--ink);line-height:1.6}
+.opts-list{display:grid;gap:.6rem;margin-bottom:.9rem}
+.opt-btn{background:var(--dust);border:1px solid var(--border);border-radius:.7rem;padding:.85rem 1rem;text-align:left;font-size:.875rem;color:var(--ink);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:.75rem;width:100%;font-family:'DM Sans',sans-serif}
+.opt-btn:hover:not(:disabled){background:var(--cream);border-color:#7F77DD}
+.opt-btn:disabled{cursor:default}
+.opt-letter{width:26px;height:26px;border-radius:50%;background:var(--cream);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:500;flex-shrink:0;color:var(--muted);transition:all .2s}
+.opt-btn.correct{background:#E1F5EE;border-color:#5DCAA5}
+.opt-btn.correct .opt-letter{background:#5DCAA5;border-color:#5DCAA5;color:#04342C}
+.opt-btn.correct .opt-text{color:#085041;font-weight:500}
+.opt-btn.wrong{background:#FCEBEB;border-color:#F09595}
+.opt-btn.wrong .opt-letter{background:#F09595;border-color:#F09595;color:#501313}
+.opt-btn.wrong .opt-text{color:#791F1F}
+.feedback-block{border-radius:.75rem;padding:.9rem 1rem;margin-bottom:.9rem;font-size:.82rem;line-height:1.7;display:flex;gap:.7rem;align-items:flex-start}
+.feedback-block.ok{background:#E1F5EE;border:1px solid #5DCAA5;color:#085041}
+.feedback-block.ko{background:#FCEBEB;border:1px solid #F09595;color:#791F1F}
+.fb-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px}
+.next-btn{width:100%;padding:.9rem;border-radius:.75rem;background:var(--purple);color:var(--purple-l);border:none;font-size:.875rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:.5rem;transition:background .2s}
+.next-btn:hover{background:#3C3489}
+
+/* done screen */
+.done-wrap{text-align:center;padding:2.5rem 1rem}
+.done-circle{width:72px;height:72px;border-radius:50%;background:var(--purple-l);border:1px solid #AFA9EC;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-size:2rem}
+.done-h{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--ink);margin-bottom:.5rem}
+.done-sub{font-size:.9rem;color:var(--muted);margin-bottom:1rem;line-height:1.6;max-width:400px;margin-left:auto;margin-right:auto}
+.done-xp-val{font-family:'Playfair Display',serif;font-size:2.25rem;font-weight:700;color:var(--purple);margin-bottom:1.75rem}
+.done-btns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+.done-btn{padding:.75rem 1.5rem;border-radius:2rem;font-size:.875rem;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--ink);font-family:'DM Sans',sans-serif;transition:background .2s}
+.done-btn:hover{background:var(--dust)}
+.done-btn.primary{background:var(--purple);color:var(--purple-l);border-color:var(--purple)}
+.done-btn.primary:hover{background:#3C3489}
+
+/* animations */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:860px){
+  .hero{grid-template-columns:1fr;padding:3rem 1.5rem}
+  .hero-right{display:none}
+  .mods-grid{grid-template-columns:1fr 1fr}
+  .how-grid{grid-template-columns:1fr}
+  .db-mods{grid-template-columns:1fr}
+  nav{padding:.9rem 1.5rem}
+  .landing-modules,.how-section,.landing-cta{padding:3rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo" onclick="showLanding()">Académie S&T</span>
+  <div class="nav-right">
+    <button class="nav-link" onclick="scrollTo('#modules-section')">Modules</button>
+    <button class="nav-link" onclick="scrollTo('#methode-section')">Méthode</button>
+    <button class="nav-cta" onclick="launchAcademy()">Commencer →</button>
+  </div>
+</nav>
+
+<!-- ═══════════ LANDING PAGE ═══════════ -->
+<div class="page active" id="landingPage">
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow"><span class="eyebrow-dot"></span>Parcours certifiant · 4 modules · 400 XP</div>
+      <h1 class="hero-h1">Comprendre la<br><em>santé mentale</em><br>au travail</h1>
+      <p class="hero-desc">Un parcours interactif fondé sur la recherche scientifique — modèles de Karasek, Siegrist, psychodynamique du travail et estime de soi.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="launchAcademy()">Débuter le parcours →</button>
+        <button class="btn-ghost" onclick="document.getElementById('modules-section').scrollIntoView({behavior:'smooth'})">Voir les modules</button>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-n">4</div><div class="stat-l">modules</div></div>
+        <div style="width:1px;background:var(--border)"></div>
+        <div><div class="stat-n">16</div><div class="stat-l">questions quiz</div></div>
+        <div style="width:1px;background:var(--border)"></div>
+        <div><div class="stat-n">400</div><div class="stat-l">XP à gagner</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="card-stack">
+        <div class="s-card"><div class="s-card-icon">🧠</div><div class="s-card-title">Travail & santé mentale</div><div class="s-card-body">Le modèle demande-latitude de Karasek : forte demande + faible autonomie = tension psychologique.</div><span class="s-tag">+100 XP</span></div>
+        <div class="s-card"><div class="s-card-icon">⚙️</div><div class="s-card-title">Organisation du travail</div><div class="s-card-body">Approches physiologique, transactionnelle, causaliste et psychodynamique comparées.</div><span class="s-tag">Module 2</span></div>
+        <div class="s-card"><div class="s-card-icon">💡</div><div class="s-card-title">Estime de soi</div><div class="s-card-body">Analyse critique : estime apparente vs profonde, autoéfficacité et modèle triaxial.</div><span class="s-tag">Chapitre 3</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track" id="mtrack"></div>
+  </div>
+
+  <!-- ── AUDIO SECTION ── -->
+  <section class="audio-section">
+    <div class="audio-section-inner">
+      <div class="audio-header reveal">
+        <div class="a-label">Conférences audio</div>
+        <h2>4 épisodes à écouter</h2>
+        <p>Des conférences pour aller plus loin — travail, santé mentale, autonomie et estime de soi explorés en profondeur.</p>
+      </div>
+      <div class="player-wrap reveal" style="transition-delay:.15s">
+        <div class="player-now">
+          <div class="player-now-top">
+            <button class="play-big" id="playBtn" onclick="togglePlay()" aria-label="Lecture / Pause">
+              <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <div class="now-info">
+              <div class="now-title" id="nowTitle">Pourquoi le travail nous rend malades</div>
+              <div class="now-sub">Épisode 1 · <span id="durLabel">--:--</span></div>
+            </div>
+            <a class="now-dl" id="dlLink" href="https://drive.google.com/uc?export=download&id=1LArboSyqiUULNCITGs1WN0as9JMyEs4b" title="Télécharger">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              Télécharger
+            </a>
+          </div>
+          <div class="progress-row">
+            <span class="p-time" id="curTime">0:00</span>
+            <div class="p-track" id="progBar" onclick="seek(event)">
+              <div class="p-fill" id="progFill"></div>
+            </div>
+            <span class="p-time" id="durTime">--:--</span>
+          </div>
+          <div class="vol-row">
+            <span class="vol-ico">🔈</span>
+            <input class="vol-sl" type="range" min="0" max="1" step="0.05" value="1" oninput="setVol(this.value)" aria-label="Volume">
+            <span class="vol-ico">🔊</span>
+          </div>
+        </div>
+        <div class="playlist" id="playlist"></div>
+      </div>
+    </div>
+    <audio id="audioEl" preload="none"></audio>
+  </section>
+
+  <section class="landing-modules" id="modules-section">
+    <div class="reveal"><div class="s-label">Le parcours</div><h2 class="section-h2">4 modules, une expertise complète</h2></div>
+    <div class="mods-grid">
+      <div class="m-card reveal" onclick="launchAcademy(0)"><div class="m-num">Module 01</div><span class="m-emoji">🧠</span><div class="m-title">Travail & santé mentale</div><div class="m-desc">La relation qui se détériore. Coûts, absences, modèles de Karasek et Siegrist.</div><div class="m-xp">✦ 100 XP</div></div>
+      <div class="m-card reveal" style="transition-delay:.1s" onclick="launchAcademy(1)"><div class="m-num">Module 02</div><span class="m-emoji">⚙️</span><div class="m-title">Organisation du travail</div><div class="m-desc">Approches physiologique, transactionnelle, causaliste et psychodynamique.</div><div class="m-xp">✦ 100 XP</div></div>
+      <div class="m-card reveal" style="transition-delay:.2s" onclick="launchAcademy(2)"><div class="m-num">Module 03</div><span class="m-emoji">🔬</span><div class="m-title">Psychodynamique du travail</div><div class="m-desc">Travail prescrit vs réel, jugement d'autrui et stratégies défensives.</div><div class="m-xp">✦ 100 XP</div></div>
+      <div class="m-card reveal" style="transition-delay:.3s" onclick="launchAcademy(3)"><div class="m-num">Module 04</div><span class="m-emoji">💡</span><div class="m-title">Estime de soi</div><div class="m-desc">Analyse critique, estime profonde vs apparente, autoéfficacité et résilience.</div><div class="m-xp">✦ 100 XP</div></div>
+    </div>
+  </section>
+
+  <section class="how-section" id="methode-section">
+    <div class="how-s-label reveal">La méthode</div>
+    <h2 class="how-h2 reveal">Apprendre en 3 étapes</h2>
+    <div class="how-grid">
+      <div class="how-step reveal"><div class="how-n">01</div><div class="how-title">Lis la leçon</div><div class="how-desc">Les concepts clés synthétisés depuis les publications scientifiques, accessibles et illustrés.</div></div>
+      <div class="how-step reveal" style="transition-delay:.15s"><div class="how-n">02</div><div class="how-title">Réponds au quiz</div><div class="how-desc">4 questions par module avec feedback immédiat et explication scientifique détaillée.</div></div>
+      <div class="how-step reveal" style="transition-delay:.3s"><div class="how-n">03</div><div class="how-title">Collecte tes récompenses</div><div class="how-desc">Accumule des XP, débloque des badges et suis ta progression vers le titre Champion.</div></div>
+    </div>
+  </section>
+
+  <section class="landing-cta">
+    <h2 class="cta-h2 reveal">Prêt à commencer<br><em style="font-style:italic;color:var(--clay)">ton parcours ?</em></h2>
+    <p class="cta-desc reveal">Accès immédiat, sans inscription. Lance-toi maintenant.</p>
+    <button class="btn-primary reveal" onclick="launchAcademy()" style="margin:0 auto;font-size:1rem;padding:1rem 2.25rem">Commencer gratuitement →</button>
+  </section>
+
+  <footer>
+    <span class="f-logo">Académie Santé & Travail</span>
+    <span class="f-copy">Contenu fondé sur des publications scientifiques</span>
+  </footer>
+</div>
+
+<!-- ═══════════ ACADEMY APP ═══════════ -->
+<div class="page" id="academyPage">
+  <div class="app-wrap">
+    <button class="back-home" onclick="showLanding()">← Retour à l'accueil</button>
+
+    <!-- DASHBOARD -->
+    <div id="dashView">
+      <div class="db-hero">
+        <div class="db-icon">🎓</div>
+        <div><h2>Mon académie</h2><p>Choisis un module pour commencer</p></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-box-label">XP gagnés</div><div class="stat-box-val" id="sXP">0</div><div class="stat-box-sub">sur 400</div></div>
+        <div class="stat-box"><div class="stat-box-label">Modules finis</div><div class="stat-box-val" id="sDone">0</div><div class="stat-box-sub">sur 4</div></div>
+        <div class="stat-box"><div class="stat-box-label">Progression</div><div class="stat-box-val" id="sPct">0%</div><div class="stat-box-sub">du parcours</div></div>
+      </div>
+      <div class="xp-wrap">
+        <div class="xp-top"><span>Progression globale</span><strong id="xpLabel">0 / 400 XP</strong></div>
+        <div class="xp-track"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+        <div class="badges-row" id="badgesRow"></div>
+      </div>
+      <div class="db-modules-label">Mes modules</div>
+      <div class="db-mods" id="dbMods"></div>
+    </div>
+
+    <!-- LESSON -->
+    <div id="lessonView" style="display:none">
+      <button class="back-home" onclick="showDash()">← Tableau de bord</button>
+      <div id="lessonContent"></div>
+    </div>
+
+    <!-- QUIZ -->
+    <div id="quizView" style="display:none">
+      <button class="back-home" onclick="showLesson()">← Revoir la leçon</button>
+      <div class="quiz-head">
+        <div class="quiz-meta"><span class="quiz-title-text" id="quizTitleText"></span><span class="quiz-count" id="quizCount"></span></div>
+        <div class="q-bar-bg"><div class="q-bar-fill" id="qBarFill" style="width:0%"></div></div>
+      </div>
+      <div id="quizContent"></div>
+    </div>
+
+    <!-- DONE -->
+    <div id="doneView" style="display:none"><div id="doneContent"></div></div>
+  </div>
+</div>
+
+<script>
+/* ── DATA ── */
+const MODS=[
+  {icon:"🧠",bg:"#EEEDFE",title:"Travail & santé mentale",author:"Vinet, Bourbonnais & Brisson",xp:100,
+   intro:"La relation entre travail et santé mentale s'est détériorée profondément. 30 à 50 % des absences longues au Canada sont attribuables à la santé mentale, dont le coût dépasse 13 milliards de dollars par an au Québec.",
+   concepts:[
+     {t:"Le modèle demande-latitude (Karasek)",d:"La tension psychologique survient quand la DEMANDE est élevée ET l'AUTONOMIE est faible. C'est la combinaison 'tendue', la plus nocive pour la santé mentale et physique."},
+     {t:"Le modèle effort-reconnaissance (Siegrist)",d:"Un déséquilibre entre les efforts fournis et la reconnaissance reçue (salaire, estime, sécurité) génère des réactions physiologiques et émotionnelles pathologiques."},
+     {t:"Les 3 grandes forces de transformation",d:"(1) Libéralisation des économies → compétitivité extrême. (2) Technologies de l'information → intensification. (3) Exigences des actionnaires → réductions d'effectifs brutales."},
+     {t:"Coûts économiques et humains",d:"Le poids des absences pour santé mentale a triplé entre 1992 et 1998 au Québec. En 2001-2002, le réseau de santé québécois a payé plus d'un quart de milliard pour 'soigner les soignants'."}
+   ],
+   qs:[
+     {q:"Selon le BIT, quelle proportion de la population adulte souffre d'un trouble de santé mentale à tout moment ?",o:["10 %","20 %","35 %","50 %"],a:1,e:"Le BIT estime qu'environ 20 % de la population adulte est touchée. Au Québec, entre 18 et 26 % des travailleurs présentent une détresse psychologique élevée."},
+     {q:"Dans le modèle de Karasek, quelle combinaison produit le plus de tension psychologique ?",o:["Faible demande + faible autonomie","Forte demande + forte autonomie","Forte demande + faible autonomie","Faible demande + forte autonomie"],a:2,e:"C'est la situation 'tendue' : beaucoup d'exigences mais peu de contrôle. Elle est associée aux maladies cardiovasculaires, à la dépression et à l'épuisement professionnel."},
+     {q:"Quelle proportion des absences longues durée au Canada est liée à la santé mentale ?",o:["5 à 15 %","30 à 50 %","60 à 70 %","Plus de 80 %"],a:1,e:"On estime que 30 à 50 % des absences de longue durée sont liées à la santé mentale — la première cause d'incapacité au travail au Canada."},
+     {q:"Quelle situation correspond à un travail 'actif' selon Karasek ?",o:["Faible demande + faible autonomie","Forte demande + faible autonomie","Faible demande + forte autonomie","Forte demande + forte autonomie"],a:3,e:"Le travail 'actif' combine forte demande ET forte autonomie. Il favorise l'apprentissage actif, la motivation et le développement de nouvelles compétences."}
+   ]
+  },
+  {icon:"⚙️",bg:"#E6F1FB",title:"Organisation du travail",author:"Michel Vézina",xp:100,
+   intro:"Deux grands paradigmes existent : les modèles stimulus-réponse (physiologique, transactionnel, causaliste) et les modèles centrés sur l'activité de travail (ergonomie, PDT). Chacun éclaire une dimension du problème.",
+   concepts:[
+     {t:"Approche physiologique (Selye)",d:"Face à une agression, le corps mobilise son système neuroendocrinien. 3 phases : alarme → résistance → épuisement. La 3e phase est le vrai 'stress' pathologique. Indicateurs : cortisol, catécholamines."},
+     {t:"Approche transactionnelle (Lazarus)",d:"Ce qui compte, c'est la représentation que l'individu a de la situation (menace ou défi ?) et ses stratégies de coping. Les thérapies cognitivo-comportementales découlent de cette approche."},
+     {t:"Approche causaliste",d:"Elle identifie les situations objectivement dangereuses pour un grand nombre de personnes. Les modèles de Karasek et Siegrist appartiennent à cette catégorie et permettent de mesurer le risque collectif."},
+     {t:"Psychodynamique du travail (PDT)",d:"S'intéresse aux dynamiques psychiques entre le sujet et son travail. Le travail est source d'identité. La non-reconnaissance par autrui est pathogène et peut mener au doute ou à la dépression."}
+   ],
+   qs:[
+     {q:"Selon Lazarus, qu'est-ce qui détermine principalement le niveau de stress ?",o:["La charge objective de travail","La représentation de la situation et les stratégies d'adaptation","Le salaire et les conditions physiques","Le nombre d'années d'expérience"],a:1,e:"Pour Lazarus, c'est la perception (menace ou défi ?) et les capacités de coping qui comptent. Deux personnes face à la même situation peuvent réagir très différemment."},
+     {q:"Dans la PDT, quel est le rôle premier du travail pour l'individu ?",o:["Gagner de l'argent","Occuper le temps libre","Construire son identité et s'accomplir","Éviter l'ennui"],a:2,e:"Pour la PDT, le travail est un instrument privilégié de construction du sens et de l'identité. Il révèle les potentialités et permet à l'individu de s'accomplir."},
+     {q:"Quelle molécule est souvent invoquée pour expliquer l'hypertension chez les personnes stressées ?",o:["L'insuline","La mélatonine","Les catécholamines","La prolactine"],a:2,e:"Une surexposition aux catécholamines (adrénaline, noradrénaline) est souvent invoquée pour expliquer l'hypertension artérielle et les maladies cardiovasculaires chez les travailleurs stressés."},
+     {q:"Quelle limite principale l'approche transactionnelle présente-t-elle selon la PDT ?",o:["Elle est trop coûteuse à mettre en œuvre","Elle ignore l'organisation du travail et ne prend en compte que le cognitif","Elle n'est valable que pour les cadres","Elle nécessite trop d'équipement"],a:1,e:"L'approche transactionnelle présuppose que les conditions de travail sont fixes et que l'individu doit s'y adapter. Elle néglige les dimensions émotionnelles inconscientes et les causes organisationnelles."}
+   ]
+  },
+  {icon:"🔬",bg:"#FAECE7",title:"Psychodynamique du travail",author:"Fondements théoriques — Vézina",xp:100,
+   intro:"La PDT s'appuie sur trois théories : celle du sujet (accomplissement, identité), celle du travail (résistance du réel) et celle de la société (jugement de l'autre). Elle positionne le travail comme producteur de santé — ou de souffrance.",
+   concepts:[
+     {t:"Travail prescrit vs travail réel",d:"Il y a TOUJOURS un écart entre ce qui est prévu et ce qui se passe réellement. Cet écart oblige l'ingéniosité et la créativité du travailleur : c'est la 'résistance du réel'."},
+     {t:"Le jugement d'autrui",d:"Le regard de l'autre est capital pour l'identité. On distingue : le jugement d'utilité (hiérarchie), le jugement de beauté (pairs) et le jugement de conformité (communauté professionnelle)."},
+     {t:"Les stratégies collectives de défense",d:"Face à la souffrance, les travailleurs développent des stratégies collectives : minimiser les risques, s'identifier à l'entreprise, faire comme si tout allait bien. Efficaces mais masquantes."},
+     {t:"La non-reconnaissance : danger majeur",d:"Ne pas voir ses difficultés reconnues amène à douter de soi, puis à la dépression (souffrance retournée vers soi) ou à la paranoïa (souffrance externalisée). Les deux sont pathologiques."}
+   ],
+   qs:[
+     {q:"Qu'est-ce que la 'résistance du réel' en PDT ?",o:["La résistance des employés aux changements","L'écart entre travail prescrit et réel qui oblige à inventer","La résistance physique des matériaux","La difficulté à atteindre les objectifs"],a:1,e:"La résistance du réel, c'est le fait que le travail ne se réduit jamais à l'application de règles. Des imprévus surgissent toujours, obligeant le travailleur à faire preuve d'ingéniosité et de créativité."},
+     {q:"Quelles sont les 3 dimensions du travail selon la PDT ?",o:["Technique, social et économique","Utilitaire, intersubjective et sociétale","Physique, mental et moral","Individuelle, collective et organisationnelle"],a:1,e:"Le travail s'articule autour de trois dimensions : utilitaire (pour l'individu), intersubjective (rapport à soi-même) et sociétale (rapport au collectif et aux normes de la communauté professionnelle)."},
+     {q:"Pourquoi les stratégies défensives peuvent-elles être problématiques ?",o:["Elles coûtent cher à l'entreprise","Elles masquent la souffrance et rendent difficile sa prise en charge","Elles diminuent la productivité globale","Elles créent des conflits entre collègues"],a:1,e:"Les stratégies défensives permettent de tenir, mais elles masquent la souffrance. Cela rend difficile le repérage des symptômes et empêche parfois une intervention précoce et efficace."},
+     {q:"Que risque un travailleur dont les difficultés ne sont pas reconnues ?",o:["Une motivation accrue à prouver sa valeur","Un doute sur ses compétences pouvant mener à la dépression","Une envie immédiate de changer d'emploi","Une hausse de productivité par défi personnel"],a:1,e:"La non-reconnaissance des difficultés peut amener à douter de ses compétences, à perdre l'estime de soi et éventuellement à sombrer dans la dépression. C'est l'un des mécanismes pathogènes centraux de la PDT."}
+   ]
+  },
+  {icon:"💡",bg:"#FAEEDA",title:"Estime de soi",author:"Dolan, García & Díez-Piñol",xp:100,
+   intro:"L'estime de soi est souvent mal comprise. Confondue avec la vanité ou le narcissisme, elle est en réalité un trait de caractère positif, équilibré — ni haine de soi, ni amour excessif. C'est une boussole interne, pas un trait fixe.",
+   concepts:[
+     {t:"La boucle de l'estime de soi",d:"Estime de soi = sens que je me donne + ce que j'ai décidé de faire de ma vie. Elle se nourrit de la reconnaissance reçue et du sens donné à ses actions. Elle est dynamique et évolutive."},
+     {t:"Estime apparente vs estime profonde",d:"L'estime apparente est fragile, volatile, défensive — souvent basée sur les accomplissements matériels. L'estime profonde est stable, authentique, connectée à l'ego essentiel."},
+     {t:"Les 3 types d'ego",d:"Ego personnage (pragmatique → estime apparente), ego rêveur (créatif → estime fantasmatique), ego conscience (éthique et profond → estime véritable). La santé psychologique repose sur le 3e."},
+     {t:"Autoéfficacité, résilience, vigueur",d:"Autoéfficacité (Bandura) = croyance en sa capacité à agir. Résilience = capacité à rebondir après l'adversité. Vigueur = énergie positive et engagement envers la vie et le travail."}
+   ],
+   qs:[
+     {q:"Quelle est la définition de l'estime de soi selon le New Collegiate Dictionary ?",o:["L'amour de soi-même et le narcissisme","La confiance en soi et la satisfaction envers sa propre personne","La fierté de ses accomplissements professionnels","L'opinion que les autres ont de nous"],a:1,e:"L'estime de soi se définit comme : (1) confiance et satisfaction envers soi-même, et (2) vanité. La vraie estime de soi est un sentiment de valeur personnelle ancré dans la réalité de qui l'on est."},
+     {q:"Quelle est la différence principale entre l'estime apparente et l'estime profonde ?",o:["L'estime apparente est basée sur les succès, l'estime profonde sur les échecs","L'estime apparente est fragile et défensive, l'estime profonde est stable et authentique","L'estime apparente concerne le travail, l'estime profonde la vie personnelle","Il n'y a pas de différence réelle"],a:1,e:"L'estime apparente est fragile et volatile, soutenue par des mécanismes de défense. L'estime profonde est stable et repose sur une connexion authentique avec ses valeurs profondes."},
+     {q:"Qu'est-ce que l'autoéfficacité selon Bandura ?",o:["La capacité à tout faire sans aide","La croyance en ses aptitudes à organiser et exécuter les actions nécessaires","La tendance à surestimer ses capacités","La confiance aveugle en ses décisions"],a:1,e:"L'autoéfficacité, c'est la croyance en ses propres aptitudes à organiser et exécuter les actions pour gérer des situations futures. C'est un prédicteur puissant de la performance et de la santé mentale."},
+     {q:"Selon le modèle triaxial, quels sont les 3 axes de l'estime de soi ?",o:["Personnel, professionnel et social","Économique (praxis), émotionnel-créatif (poétique) et éthique-transcendant","Mental, physique et spirituel","Passé, présent et futur"],a:1,e:"Le modèle triaxial distingue l'axe praxis (efficacité, résultats), l'axe poétique (créativité, émotion) et l'axe éthique-transcendant (valeurs, sens). Une estime équilibrée intègre les trois."}
+   ]
+  }
+];
+
+/* ── STATE ── */
+let xp=0,done=[false,false,false,false],cur=0,qIdx=0,answered=false;
+
+/* ── MARQUEE ── */
+(function(){
+  const items=['Modèle de Karasek','Psychodynamique du travail','Modèle de Siegrist','Estime de soi','Stratégies de coping','Burnout & épuisement','Autonomie décisionnelle','Effort-Reconnaissance'];
+  const doubled=[...items,...items];
+  document.getElementById('mtrack').innerHTML=doubled.map(t=>`<div class="m-item"><span class="m-dot"></span>${t}</div>`).join('');
+})();
+
+/* ── REVEAL ── */
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* ── AUDIO PLAYLIST ── */
+const GD='https://drive.google.com/uc?export=open&id=';
+const GD_DL='https://drive.google.com/uc?export=download&id=';
+const TRACKS=[
+  {title:"Pourquoi le travail nous rend malades",   file:GD+'1LArboSyqiUULNCITGs1WN0as9JMyEs4b', dl:GD_DL+'1LArboSyqiUULNCITGs1WN0as9JMyEs4b', ep:1},
+  {title:"Quand le manque d'autonomie devient mortel",file:GD+'16yWQmYIGMUlkLIzppucVCqthD3TTqkHP',dl:GD_DL+'16yWQmYIGMUlkLIzppucVCqthD3TTqkHP',ep:2},
+  {title:"L'estime de soi : entre armure et pont",  file:GD+'12tJx2Arrmu7jBBBefCBDH1ao1Trq8MUm', dl:GD_DL+'12tJx2Arrmu7jBBBefCBDH1ao1Trq8MUm', ep:3},
+  {title:"L'estime de soi : entre armure et pont (suite)",file:GD+'1sxaszNRICJ6_C94_LRmBpXJhJW6gQ998',dl:GD_DL+'1sxaszNRICJ6_C94_LRmBpXJhJW6gQ998',ep:4}
+];
+
+const PLAY_PATH='M8 5v14l11-7z';
+const PAUSE_PATH='M6 19h4V5H6v14zm8-14v14h4V5h-4z';
+
+let curTrack=0;
+const aud=document.getElementById('audioEl');
+
+function fmt(s){if(!s||isNaN(s)||!isFinite(s))return'--:--';const m=Math.floor(s/60),sec=Math.floor(s%60);return m+':'+(sec<10?'0':'')+sec}
+
+function buildPlaylist(){
+  const pl=document.getElementById('playlist');
+  pl.innerHTML=TRACKS.map((t,i)=>`
+    <div class="pl-item${i===0?' active':''}" id="pli${i}" onclick="loadTrack(${i},true)">
+      <span class="pl-num">${i+1}</span>
+      <span class="pl-icon">
+        <svg viewBox="0 0 24 24"><path d="${i===0?PLAY_PATH:'M8 5v14l11-7z'}"/></svg>
+      </span>
+      <div class="pl-info"><div class="pl-title">${t.title}</div></div>
+      <span class="pl-dur" id="dur${i}">--:--</span>
+    </div>
+  `).join('');
+}
+
+function loadTrack(i,autoplay){
+  curTrack=i;
+  const t=TRACKS[i];
+  aud.src=t.file;
+  aud.load();
+  document.getElementById('nowTitle').textContent=t.title;
+  document.getElementById('dlLink').href=t.dl;
+  document.getElementById('dlLink').download='';
+  document.querySelector('.now-sub').innerHTML='Épisode '+t.ep+' · <span id="durLabel">--:--</span>';
+  document.getElementById('progFill').style.width='0%';
+  document.getElementById('curTime').textContent='0:00';
+  document.getElementById('durTime').textContent='--:--';
+  document.getElementById('playIcon').querySelector('path').setAttribute('d',PLAY_PATH);
+  document.querySelectorAll('.pl-item').forEach((el,j)=>el.classList.toggle('active',j===i));
+  document.querySelectorAll('.pl-icon svg path').forEach((p,j)=>p.setAttribute('d',j===i&&autoplay?PAUSE_PATH:PLAY_PATH));
+  if(autoplay){aud.play();document.getElementById('playIcon').querySelector('path').setAttribute('d',PAUSE_PATH);}
+}
+
+function togglePlay(){
+  if(aud.paused){aud.play();document.getElementById('playIcon').querySelector('path').setAttribute('d',PAUSE_PATH);}
+  else{aud.pause();document.getElementById('playIcon').querySelector('path').setAttribute('d',PLAY_PATH);}
+}
+
+aud.addEventListener('loadedmetadata',()=>{
+  const d=fmt(aud.duration);
+  document.getElementById('durTime').textContent=d;
+  const lbl=document.getElementById('durLabel');
+  if(lbl)lbl.textContent=d;
+  const durEl=document.getElementById('dur'+curTrack);
+  if(durEl)durEl.textContent=d;
+});
+
+aud.addEventListener('timeupdate',()=>{
+  if(!aud.duration)return;
+  document.getElementById('progFill').style.width=((aud.currentTime/aud.duration)*100)+'%';
+  document.getElementById('curTime').textContent=fmt(aud.currentTime);
+});
+
+aud.addEventListener('ended',()=>{
+  document.getElementById('playIcon').querySelector('path').setAttribute('d',PLAY_PATH);
+  if(curTrack<TRACKS.length-1)loadTrack(curTrack+1,true);
+  else{document.getElementById('progFill').style.width='0%';document.getElementById('curTime').textContent='0:00';}
+});
+
+function seek(e){
+  const bar=document.getElementById('progBar');
+  const ratio=Math.min(1,Math.max(0,e.offsetX/bar.offsetWidth));
+  if(aud.duration)aud.currentTime=ratio*aud.duration;
+}
+function setVol(v){aud.volume=v;}
+
+buildPlaylist();
+loadTrack(0,false);
+
+/* ── PAGE ROUTING ── */
+function showLanding(){
+  document.getElementById('landingPage').classList.add('active');
+  document.getElementById('academyPage').classList.remove('active');
+  window.scrollTo(0,0);
+}
+function showAcademy(){
+  document.getElementById('landingPage').classList.remove('active');
+  document.getElementById('academyPage').classList.add('active');
+  window.scrollTo(0,0);
+}
+function launchAcademy(modIdx){
+  showAcademy();
+  if(modIdx!==undefined){cur=modIdx;showLesson();}
+  else{showDash();}
+}
+
+/* ── ACADEMY VIEWS ── */
+function showDash(){
+  document.getElementById('dashView').style.display='block';
+  document.getElementById('lessonView').style.display='none';
+  document.getElementById('quizView').style.display='none';
+  document.getElementById('doneView').style.display='none';
+  renderDash();
+}
+function showLesson(){
+  document.getElementById('dashView').style.display='none';
+  document.getElementById('lessonView').style.display='block';
+  document.getElementById('quizView').style.display='none';
+  document.getElementById('doneView').style.display='none';
+  renderLesson();
+}
+function startQuiz(){
+  qIdx=0;answered=false;
+  document.getElementById('dashView').style.display='none';
+  document.getElementById('lessonView').style.display='none';
+  document.getElementById('quizView').style.display='block';
+  document.getElementById('doneView').style.display='none';
+  renderQ();
+}
+function showDoneView(){
+  document.getElementById('dashView').style.display='none';
+  document.getElementById('lessonView').style.display='none';
+  document.getElementById('quizView').style.display='none';
+  document.getElementById('doneView').style.display='block';
+}
+
+/* ── RENDER DASHBOARD ── */
+function renderDash(){
+  const pct=Math.round((xp/400)*100);
+  document.getElementById('sXP').textContent=xp;
+  document.getElementById('sDone').textContent=done.filter(Boolean).length;
+  document.getElementById('sPct').textContent=pct+'%';
+  document.getElementById('xpLabel').textContent=xp+' / 400 XP';
+  document.getElementById('xpFill').style.width=pct+'%';
+
+  const badges=[
+    {id:'b0',label:'Santé mentale',gold:false},
+    {id:'b1',label:'Organisation',gold:false},
+    {id:'b2',label:'Psychodynamique',gold:false},
+    {id:'b3',label:'Estime de soi',gold:false},
+    {id:'bAll',label:'Champion !',gold:true}
+  ];
+  document.getElementById('badgesRow').innerHTML=badges.map((b,i)=>{
+    const earned=i<4?done[i]:done.every(Boolean);
+    return`<span class="badge-p${earned?' earned':''}${b.gold?' gold':''}">${b.label}</span>`;
+  }).join('');
+
+  document.getElementById('dbMods').innerHTML=MODS.map((m,i)=>`
+    <div class="db-mod${done[i]?' done-mod':''}" onclick="cur=${i};showLesson()">
+      ${done[i]?'<div class="done-chip">✓ Complété</div>':''}
+      <div class="db-mod-head">
+        <div class="db-mod-emoji" style="background:${m.bg}">${m.icon}</div>
+        <div><div class="db-mod-name">${m.title}</div><div class="db-mod-author">${m.author}</div></div>
+      </div>
+      <div style="font-size:.78rem;color:var(--muted);line-height:1.6">${m.intro.substring(0,90)}…</div>
+      <div class="db-mod-foot">
+        <div class="db-mod-xp"><strong>+${m.xp}</strong> XP</div>
+        <div class="db-mod-cta">${done[i]?'Revoir':'Commencer'} →</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ── RENDER LESSON ── */
+function renderLesson(){
+  const m=MODS[cur];
+  document.getElementById('lessonContent').innerHTML=`
+    <div class="lesson-hero-box">
+      <div class="lesson-hero-top">
+        <span class="lesson-emoji-lg">${m.icon}</span>
+        <div><div class="lesson-box-title">${m.title}</div><div class="lesson-box-sub">${m.author}</div></div>
+      </div>
+      <p class="lesson-intro-text">${m.intro}</p>
+    </div>
+    <div class="concepts-label">Concepts clés</div>
+    <div class="concept-grid">
+      ${m.concepts.map(c=>`
+        <div class="concept-card">
+          <div class="concept-chip">${c.t}</div>
+          <div class="concept-body">${c.d}</div>
+        </div>`).join('')}
+    </div>
+    <button class="start-btn" onclick="startQuiz()">
+      Tester mes connaissances — Quiz (${m.qs.length} questions) →
+    </button>
+  `;
+}
+
+/* ── RENDER QUESTION ── */
+function renderQ(){
+  const m=MODS[cur],q=m.qs[qIdx];
+  const pct=Math.round((qIdx/m.qs.length)*100);
+  document.getElementById('quizTitleText').textContent=m.icon+' '+m.title;
+  document.getElementById('quizCount').textContent='Question '+(qIdx+1)+' / '+m.qs.length;
+  document.getElementById('qBarFill').style.width=pct+'%';
+  const letters=['A','B','C','D'];
+  document.getElementById('quizContent').innerHTML=`
+    <div class="q-card">
+      <div class="q-num-label">Question ${qIdx+1}</div>
+      <div class="q-text">${q.q}</div>
+    </div>
+    <div class="opts-list">
+      ${q.o.map((o,i)=>`
+        <button class="opt-btn" id="opt${i}" onclick="pick(${i})">
+          <span class="opt-letter">${letters[i]}</span>
+          <span class="opt-text">${o}</span>
+        </button>`).join('')}
+    </div>
+    <div id="fb"></div>
+    <div id="nxtWrap" style="display:none">
+      <button class="next-btn" onclick="nextQ()">
+        ${qIdx+1<m.qs.length?'Question suivante →':'Voir mes résultats →'}
+      </button>
+    </div>
+  `;
+}
+
+function pick(i){
+  if(answered)return;answered=true;
+  const q=MODS[cur].qs[qIdx],letters=['A','B','C','D'];
+  document.querySelectorAll('.opt-btn').forEach((b,j)=>{
+    b.disabled=true;
+    if(j===q.a)b.classList.add('correct');
+    else if(j===i)b.classList.add('wrong');
+  });
+  const ok=i===q.a;
+  document.getElementById('fb').innerHTML=`
+    <div class="feedback-block ${ok?'ok':'ko'}">
+      <span class="fb-icon">${ok?'✓':'✗'}</span>
+      <div><strong>${ok?'Bonne réponse !':'Pas tout à fait.'}</strong>${ok?'':' La bonne réponse est <strong>'+letters[q.a]+'.</strong>'} ${q.e}</div>
+    </div>`;
+  document.getElementById('nxtWrap').style.display='block';
+}
+
+function nextQ(){
+  answered=false;qIdx++;
+  if(qIdx>=MODS[cur].qs.length){renderDone();return;}
+  renderQ();
+}
+
+function renderDone(){
+  if(!done[cur]){done[cur]=true;xp+=MODS[cur].xp;}
+  const allDone=done.every(Boolean);
+  document.getElementById('doneContent').innerHTML=`
+    <div class="done-wrap">
+      <div class="done-circle">${allDone?'🏆':'⭐'}</div>
+      <div class="done-h">${allDone?'Parcours terminé !':'Module complété !'}</div>
+      <div class="done-sub">${allDone
+        ?'Tu as maîtrisé les 4 modules. Tu es un véritable expert de la santé au travail !'
+        :'Tu as terminé le module <strong>'+MODS[cur].title+'</strong>. Continue !'}</div>
+      <div class="done-xp-val">+${MODS[cur].xp} XP</div>
+      <div class="done-btns">
+        <button class="done-btn" onclick="cur=${cur};showLesson()">Revoir la leçon</button>
+        <button class="done-btn primary" onclick="showDash()">Tableau de bord</button>
+      </div>
+    </div>`;
+  showDoneView();
+}
+</script>
+</body>
+</html>
